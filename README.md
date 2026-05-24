@@ -1,2 +1,27 @@
 # ByteBites-TermProject-CSC5750
 Restaurant Order Management System
+
+Team Workflow
+1) Each featue should have an issue created that corresponds with it for clarity
+2) Commit all new changes frequently to save all versions
+3) Push all changes
+4) Create a pull requests for review, each pull requests will require 1 to 2 reviews before it can be pushed to main branch to prevent errors (Branch should be named after issue number and have feature name)
+
+Project Setup Overview
+To run full application, you must run both the backend and frontend at the same time. This requires two terminals (split terminals in VS Code)
+
+Backend Setup
+From project root
+1) cd Backend
+2) npm install
+3) npm start
+
+Frontend Setup
+From project root
+1) cd Frontend
+2) npm install
+3) npm run dev
+
+Node Version
+This project uses v24.13.0
+All team members should install this version to avoid compatibility issues
