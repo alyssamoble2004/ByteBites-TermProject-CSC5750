@@ -2,6 +2,7 @@
 Restaurant Order Management System
 
 <strong>Team Workflow</strong>
+<br>
 1) Each featue should have an issue created that corresponds with it for clarity
 2) Commit all new changes frequently to save all versions
 3) Push all changes
