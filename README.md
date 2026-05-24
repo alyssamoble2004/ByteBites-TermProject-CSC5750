@@ -9,19 +9,22 @@ Restaurant Order Management System
 
 <strong>Project Setup Overview</strong>
 <br>
-To run full application, you must run both the backend and frontend at the same time. This requires two terminals (split terminals in VS Code)
+1) To run full application, you must run both the backend and frontend at the same time. This requires two terminals (split terminals in VS Code)
+2) Each person also needs to create a .env file in the Backend folder and the Frontend folder, these are local so private information is not pushed to github
 
 <strong>Backend Setup</strong>
 From project root
 1) cd Backend
 2) npm install
 3) npm start
+Backend runs at: http://localhost:5000
 
 <strong>Frontend Setup</strong>
 From project root
 1) cd Frontend
 2) npm install
 3) npm run dev
+Frontend runs at: http://localhost:5173
 
 <strong>Node Version</strong>
 <br>
