@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
 
@@ -12,8 +13,19 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
+// Use Render's dynamic port if available
+const PORT = process.env.PORT || 5000;
 
-console.log("DB_PASS:", process.env.DB_PASS);
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();

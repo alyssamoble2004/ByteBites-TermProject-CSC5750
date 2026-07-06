@@ -1,69 +1,102 @@
-//handles signup and login logic
-
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import db from "../config/db.js";
+import jwt from "jsonwebtoken";
 
-export const signup = (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+// SIGNUP
+export const signup = async (req, res) => {
+  try {
+    const { firstName, lastName, email, password } = req.body;
 
-  if (!firstName || !lastName || !email || !password) {
-    return res.json({ success: false, message: "All fields are required" });
-  }
+    if (!firstName || !lastName || !email || !password) {
+      return res.json({ success: false, message: "All fields are required" });
+    }
 
-  if (password.length < 8) {
-    return res.json({ success: false, message: "Password must be at least 8 characters long" });
-  }
+    if (password.length < 8) {
+      return res.json({ success: false, message: "Password must be at least 8 characters long" });
+    }
 
-  db.query("SELECT * FROM users WHERE email = ?", [email], async (err, results) => {
-    if (err) return res.json({ success: false, message: "Server error" });
-
-    if (results.length > 0) {
+    // Check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.json({ success: false, message: "Email already in use" });
     }
 
-    const hashed = await bcrypt.hash(password, 10);
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    db.query(
-      "INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)",
-      [firstName, lastName, email, hashed],
-      (err) => {
-        if (err) return res.json({ success: false, message: "Insert failed" });
+    // Create user
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
 
-        return res.json({ success: true, message: "Account created successfully" });
-      }
+    await newUser.save();
+
+    // Create JWT token
+    const token = jwt.sign(
+      { id: newUser._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
     );
-  });
+
+    return res.json({
+      success: true,
+      message: "Account created successfully",
+      token,
+      user: {
+        id: newUser._id,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        email: newUser.email,
+      },
+    });
+  } catch (error) {
+    return res.json({ success: false, message: "Signup failed", error });
+  }
 };
 
-export const login = (req, res) => {
-  const { email, password } = req.body;
+// LOGIN
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.json({ success: false, message: "Email and password are required" });
-  }
+    if (!email || !password) {
+      return res.json({ success: false, message: "Email and password are required" });
+    }
 
-  db.query("SELECT * FROM users WHERE email = ?", [email], async (err, results) => {
-    if (err) return res.json({ success: false, message: "Server error" });
-
-    if (results.length === 0) {
+    // Find user
+    const user = await User.findOne({ email });
+    if (!user) {
       return res.json({ success: false, message: "Email or password is incorrect" });
     }
 
-    const user = results[0];
+    // Compare password
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.json({ success: false, message: "Email or password is incorrect" });
     }
 
+    // Create JWT token
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
     return res.json({
       success: true,
       message: "Login successful",
+      token,
       user: {
-        id: user.id,
+        id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
       },
     });
-  });
+  } catch (error) {
+    return res.json({ success: false, message: "Login failed", error });
+  }
 };

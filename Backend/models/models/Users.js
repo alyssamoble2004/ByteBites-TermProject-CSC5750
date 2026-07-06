@@ -1,1 +1,0 @@
-//defines table structure for users in database
