@@ -56,6 +56,10 @@ function Login() {
                         Login
                     </button>
 
+                    <p className="signup-link">
+                        Don't have an account? <a href="/signup">Sign Up</a>
+                    </p>
+
                 </form>
             </div>
 
