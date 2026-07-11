@@ -1,5 +1,22 @@
+body {
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .menu-page {
+  width: 100%;
   min-height: 100vh;
+  margin: 0;
   background: #292020;
   color: white;
   font-family: Arial, sans-serif;
@@ -92,8 +109,9 @@
 }
 
 .food-info h3 {
-  font-size: 18px;
-  margin: 7px 0;
+  margin: 8px 0;
+  color: #292020;
+  font-size: 20px;
 }
 
 .description {
