@@ -8,13 +8,13 @@
 
 /* Page background */
 .signup-page {
-  background: #f4f4f4;
+  background: #292020;
   min-height: 100vh;
 }
 
 /* Header (same as Order Summary) */
 .signup-header {
-  background: #ff6600;
+  background: #560305;
   color: white;
   text-align: center;
   padding: 20px;
@@ -51,7 +51,7 @@
 .signup-btn {
   width: 100%;
   padding: 12px;
-  background: green;
+  background: #BF5100;
   color: white;
   border: none;
   font-size: 18px;
@@ -60,7 +60,8 @@
 }
 
 .signup-btn:hover {
-  background: darkgreen;
+  background: #F3BE15;
+  color: black;
 }
 
 /* Footer */
