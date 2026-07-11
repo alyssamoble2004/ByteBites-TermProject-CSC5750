@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 function Signup() {
@@ -9,6 +10,8 @@ function Signup() {
         password: "",
         verifyPassword: "",
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -49,6 +52,8 @@ function Signup() {
 
         if (data.success) {
             alert("Signup successful!");
+
+            navigate("/menu");
         } else {
             alert(data.message || "Signup failed");
         }

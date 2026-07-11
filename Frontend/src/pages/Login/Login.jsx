@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
@@ -6,6 +7,8 @@ function Login() {
         email: "",
         password: "",
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -22,7 +25,10 @@ function Login() {
             return;
         }
 
-        alert("Login submitted!");
+        //if login is successful
+        navigate("/menu");
+
+        //alert("Login submitted!");
     };
 
     return (
