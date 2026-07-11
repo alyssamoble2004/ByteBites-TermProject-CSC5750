@@ -92,8 +92,9 @@
 }
 
 .food-info h3 {
-  font-size: 18px;
-  margin: 7px 0;
+  margin: 8px 0;
+  color: #292020;
+  font-size: 20px;
 }
 
 .description {
