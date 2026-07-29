@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function PlaceOrder() {
+function PlaceOrder({ onSuccess }) {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
@@ -15,45 +15,46 @@ function PlaceOrder() {
         }
 
         setMessage("Order placed successfully!");
+
+        if (onSuccess) {
+            setTimeout(onSuccess, 600);
+        }
     };
 
     return (
-        <div>
-            <h1>Place Your Order</h1>
+        <div className="place-order-card">
+            <h2>Place Your Order</h2>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="place-order-form">
                 <input
+                    className="place-order-input"
                     type="text"
                     placeholder="Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
 
-                <br />
-
                 <input
+                    className="place-order-input"
                     type="text"
                     placeholder="Phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                 />
 
-                <br />
-
                 <textarea
+                    className="place-order-textarea"
                     placeholder="Address"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                 />
 
-                <br />
-
-                <button type="submit">
+                <button type="submit" className="place-order-submit">
                     Place Order
                 </button>
             </form>
 
-            <p>{message}</p>
+            {message && <p className={`place-order-message ${message.includes("successfully") ? "success" : "error"}`}>{message}</p>}
         </div>
     );
 }

@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import connectDB from "./config/db.js";
+import orderRoutes from "./routes/orders.js";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Use Render's dynamic port if available
 const PORT = process.env.PORT || 5000;

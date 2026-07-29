@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Menu.css";
 
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
@@ -65,6 +66,13 @@ function Menu() {
   const [orderItems, setOrderItems] = useState([]);
   const [showOrderSummary, setShowOrderSummary] = useState(false);
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userEmail");
+    navigate("/login");
+  }
+
   const filteredItems =
     selectedCategory === "All"
       ? menuItems
@@ -107,6 +115,19 @@ function Menu() {
         <p>Choose your meal and add it to your order.</p>
       </header>
 
+      <div className="profile-menu">        
+        <img
+           src="/profile-icon.jpg"
+            alt="Profile"
+            className="profile-icon"
+          />
+
+        <div className="profile-dropdown">
+          <p onClick={() => navigate("/orderhistory")}>Order History</p>
+          <p onClick={handleLogout}>Logout</p>
+        </div>
+      </div>
+
       <div className="category-section">
         {categories.map((category) => (
           <button
@@ -118,7 +139,7 @@ function Menu() {
           </button>
         ))}
       </div>
-
+    
       <button
         className="summary-link-section"
         onClick={() => setShowOrderSummary(true)}

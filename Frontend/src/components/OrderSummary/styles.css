@@ -100,3 +100,81 @@
 .place-order-btn:hover {
   background: #a74400;
 }
+
+.place-order-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(41, 32, 32, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1100;
+}
+
+.place-order-modal {
+  position: relative;
+  width: min(100%, 460px);
+  background: #fffaf2;
+  color: #292020;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.place-order-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.place-order-card h2 {
+  margin: 0;
+  color: #560305;
+}
+
+.place-order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.place-order-input,
+.place-order-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d9c8a8;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.place-order-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.place-order-submit {
+  padding: 10px 12px;
+  background: #560305;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.place-order-submit:hover {
+  background: #3e0204;
+}
+
+.place-order-message {
+  margin: 0;
+  font-weight: 600;
+}
+
+.place-order-message.success {
+  color: #2f7d32;
+}
+
+.place-order-message.error {
+  color: #b42318;
+}
