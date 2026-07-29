@@ -1,55 +1,76 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./OrderHistory.css";
 
 function OrderHistory() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
-    //get user id email
     const userEmail = localStorage.getItem("userEmail");
 
     useEffect(() => {
+        if (!userEmail) {
+            navigate("/");
+            return;
+        }
+
         async function fetchOrders() {
             try {
-                const response = await fetch(`http://localhost:5000/api/orders/${userEmail}`);
+                const response = await fetch(`http://localhost:5000/api/orders/${encodeURIComponent(userEmail)}`);
+
+                if (!response.ok) {
+                    throw new Error(`Failed to load order history: ${response.status}`);
+                }
+
                 const data = await response.json();
-                setOrders(data);
+                setOrders(data || []);
             } catch (error) {
                 console.error("Error fetching orders:", error);
+                setOrders([]);
             } finally {
                 setLoading(false);
             }
         }
 
         fetchOrders();
-    }, [userEmail]);
+    }, [navigate, userEmail]);
 
     if (loading) {
         return <div>Loading your order history...</div>;
     }
 
     if (!orders.length) {
-        return <div className="order-history-page">
-            You have no past orders.</div>;
+        return (
+            <div className="order-history-page">
+                <h1>Your Order History</h1>
+                <p>You have no past orders.</p>
+            </div>
+        );
     }
 
     return (
         <div className="order-history-page">
             <h1>Your Order History</h1>
 
-            {orders.map((order) => (
-                <div key={order._id} className="order-card">
-                    <p className="order-date">Order Date: {new Date(order.date).toLocaleString()}</p>
-                    <p className="order-total">Total: ${order.total.toFixed(2)}</p>
-                    <div className="order-items">
-                        {order.items.map((item, index) => (
-                            <li key={item.id} className="order-item">
-                                {item.quantity} x {item.name} - ${item.price.toFixed(2)} each
-                            </li>
-                        ))}
+            {orders.map((order) => {
+                const orderDate = order.createdAt ? new Date(order.createdAt) : new Date(order.date || Date.now());
+                const orderTotal = order.totalPrice ?? order.total ?? 0;
+
+                return (
+                    <div key={order._id} className="order-card">
+                        <p className="order-date">Order Date: {orderDate.toLocaleString()}</p>
+                        <p className="order-total">Total: ${orderTotal.toFixed(2)}</p>
+                        <ul className="order-items">
+                            {order.items.map((item) => (
+                                <li key={item.id ?? `${item.name}-${item.quantity}`} className="order-item">
+                                    {item.quantity} x {item.name} - ${item.price.toFixed(2)} each
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 }

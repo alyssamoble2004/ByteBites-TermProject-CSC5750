@@ -68,9 +68,12 @@ function Menu() {
 
   const navigate = useNavigate();
 
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const handleLogout = () => {
+    setShowDropdown(false);
     localStorage.removeItem("userEmail");
-    navigate("/login");
+    navigate("/");
   }
 
   const filteredItems =
@@ -117,15 +120,25 @@ function Menu() {
 
       <div className="profile-menu">        
         <img
-           src="/profile-icon.jpg"
-            alt="Profile"
-            className="profile-icon"
-          />
+          src="/profile-icon.jpg"
+          alt="Profile"
+          className="profile-icon"
+          onClick={() => setShowDropdown(!showDropdown)}
+        />
 
-        <div className="profile-dropdown">
-          <p onClick={() => navigate("/orderhistory")}>Order History</p>
-          <p onClick={handleLogout}>Logout</p>
-        </div>
+        {showDropdown && (
+          <div className="profile-dropdown">
+            <p
+              onClick={() => {
+                setShowDropdown(false);
+                navigate("/order-history");
+              }}
+            >
+              Order History
+            </p>
+            <p onClick={handleLogout}>Logout</p>
+          </div>
+        )}
       </div>
 
       <div className="category-section">

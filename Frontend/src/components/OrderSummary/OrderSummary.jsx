@@ -1,27 +1,16 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
-import PlaceOrder from "../PlaceOrder/PlaceOrder";
-
-function OrderSummary({ orderItems, onClose, onPlaceOrder }) {
-  const [showPlaceOrderModal, setShowPlaceOrderModal] = useState(false);
-
+function OrderSummary({ orderItems, onClose }) {  
   const totalPrice = orderItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
   const totalItems = orderItems.reduce((total, item) => total + item.quantity, 0);
 
+  const navigate = useNavigate();
   const handlePlaceOrderClick = () => {
-    onClose();
-    setShowPlaceOrderModal(true);
-  };
-
-  const handlePlaceOrderSuccess = () => {
-    setShowPlaceOrderModal(false);
-    if (onPlaceOrder) {
-      onPlaceOrder();
-    }
+    navigate("/place-order", { state: { orderItems } });
   };
 
   return (
@@ -64,21 +53,6 @@ function OrderSummary({ orderItems, onClose, onPlaceOrder }) {
           </button>
         </div>
       </div>
-
-      {showPlaceOrderModal && (
-        <div className="place-order-modal-overlay" onClick={() => setShowPlaceOrderModal(false)}>
-          <div className="place-order-modal" onClick={(event) => event.stopPropagation()}>
-            <button
-              className="order-summary-close"
-              onClick={() => setShowPlaceOrderModal(false)}
-              aria-label="Close place order form"
-            >
-              ×
-            </button>
-            <PlaceOrder onSuccess={handlePlaceOrderSuccess} />
-          </div>
-        </div>
-      )}
     </>
   );
 }
