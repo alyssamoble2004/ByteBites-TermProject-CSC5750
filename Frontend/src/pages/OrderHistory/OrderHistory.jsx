@@ -17,7 +17,7 @@ function OrderHistory() {
 
         async function fetchOrders() {
             try {
-                const response = await fetch(`http://localhost:5000/api/orders/${encodeURIComponent(userEmail)}`);
+                const response = await fetch(`https://bytebites-termproject-csc5750.onrender.com/api/orders/${encodeURIComponent(userEmail)}`);
 
                 if (!response.ok) {
                     throw new Error(`Failed to load order history: ${response.status}`);
