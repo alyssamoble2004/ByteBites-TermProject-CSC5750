@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Menu.css";
 
+import OrderSummary from "../../components/OrderSummary/OrderSummary";
+
 import burger from "../../assets/images/burger.jpg";
 import chicken from "../../assets/images/chicken.jpg";
 import bbqBurger from "../../assets/images/bbq-burger.jpg";
@@ -60,6 +62,9 @@ function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [quantities, setQuantities] = useState({});
 
+  const [orderItems, setOrderItems] = useState([]);
+  const [showOrderSummary, setShowOrderSummary] = useState(false);
+
   const filteredItems =
     selectedCategory === "All"
       ? menuItems
@@ -78,7 +83,21 @@ function Menu() {
   };
 
   const addItem = (item) => {
+    const quantity = getQuantity(item.id);
+
     alert(`${getQuantity(item.id)} ${item.name}(s) added to order.`);
+
+    setOrderItems((prevItems) => {
+      const existingItem = prevItems.find((i) => i.id === item.id);
+
+      if (existingItem) {
+        return prevItems.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
+        );
+      }
+
+      return [...prevItems, { ...item, quantity }];
+    });
   };
 
   return (
@@ -100,12 +119,24 @@ function Menu() {
         ))}
       </div>
 
-    <div className="summary-link-section">
-        <a href="/order summary.html" className="summary-link">
-          View Order Summary
-        </a>
-    </div>
+      <button
+        className="summary-link-section"
+        onClick={() => setShowOrderSummary(true)}
+        type="button"
+      >
+        <span className="summary-link">View Order Summary</span>
+      </button>
 
+      {showOrderSummary && (
+        <OrderSummary
+          orderItems={orderItems}
+          onClose={() => setShowOrderSummary(false)}
+          onPlaceOrder={() => {
+            setShowOrderSummary(false);
+            setOrderItems([]);
+          }}
+        />
+      )}
 
       <section className="food-grid">
         {filteredItems.map((item) => (
