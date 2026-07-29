@@ -26,6 +26,7 @@ function Login() {
         }
 
         //if login is successful
+        localStorage.setItem("userEmail", formData.email);
         navigate("/menu");
 
         //alert("Login submitted!");

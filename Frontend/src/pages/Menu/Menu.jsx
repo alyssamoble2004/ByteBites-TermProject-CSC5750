@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Menu.css";
+
+import OrderSummary from "../../components/OrderSummary/OrderSummary";
 
 import burger from "../../assets/images/burger.jpg";
 import chicken from "../../assets/images/chicken.jpg";
@@ -60,6 +63,19 @@ function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [quantities, setQuantities] = useState({});
 
+  const [orderItems, setOrderItems] = useState([]);
+  const [showOrderSummary, setShowOrderSummary] = useState(false);
+
+  const navigate = useNavigate();
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleLogout = () => {
+    setShowDropdown(false);
+    localStorage.removeItem("userEmail");
+    navigate("/");
+  }
+
   const filteredItems =
     selectedCategory === "All"
       ? menuItems
@@ -78,7 +94,21 @@ function Menu() {
   };
 
   const addItem = (item) => {
+    const quantity = getQuantity(item.id);
+
     alert(`${getQuantity(item.id)} ${item.name}(s) added to order.`);
+
+    setOrderItems((prevItems) => {
+      const existingItem = prevItems.find((i) => i.id === item.id);
+
+      if (existingItem) {
+        return prevItems.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
+        );
+      }
+
+      return [...prevItems, { ...item, quantity }];
+    });
   };
 
   return (
@@ -87,6 +117,29 @@ function Menu() {
         <h1>ByteBites Menu</h1>
         <p>Choose your meal and add it to your order.</p>
       </header>
+
+      <div className="profile-menu">        
+        <img
+          src="/profile-icon.jpg"
+          alt="Profile"
+          className="profile-icon"
+          onClick={() => setShowDropdown(!showDropdown)}
+        />
+
+        {showDropdown && (
+          <div className="profile-dropdown">
+            <p
+              onClick={() => {
+                setShowDropdown(false);
+                navigate("/order-history");
+              }}
+            >
+              Order History
+            </p>
+            <p onClick={handleLogout}>Logout</p>
+          </div>
+        )}
+      </div>
 
       <div className="category-section">
         {categories.map((category) => (
@@ -99,13 +152,25 @@ function Menu() {
           </button>
         ))}
       </div>
+    
+      <button
+        className="summary-link-section"
+        onClick={() => setShowOrderSummary(true)}
+        type="button"
+      >
+        <span className="summary-link">View Order Summary</span>
+      </button>
 
-    <div className="summary-link-section">
-        <a href="/order summary.html" className="summary-link">
-          View Order Summary
-        </a>
-    </div>
-
+      {showOrderSummary && (
+        <OrderSummary
+          orderItems={orderItems}
+          onClose={() => setShowOrderSummary(false)}
+          onPlaceOrder={() => {
+            setShowOrderSummary(false);
+            setOrderItems([]);
+          }}
+        />
+      )}
 
       <section className="food-grid">
         {filteredItems.map((item) => (
