@@ -40,37 +40,54 @@ function OrderHistory() {
         return <div>Loading your order history...</div>;
     }
 
-    if (!orders.length) {
+    const sortedOrders = [...orders].sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.date || 0).getTime();
+        const dateB = new Date(b.createdAt || b.date || 0).getTime();
+        return dateB - dateA;
+    });
+
+    if (!sortedOrders.length) {
         return (
             <div className="order-history-page">
-                <h1>Your Order History</h1>
-                <p>You have no past orders.</p>
+                <div className="top-section">
+                    <h1>Your Order History</h1>
+                </div>
+                <div className="order-history-empty-state">
+                    <p>You have no past orders.</p>
+                </div>
             </div>
         );
     }
 
     return (
         <div className="order-history-page">
-            <h1>Your Order History</h1>
+            <div className="top-section">
+                <h1>Your Order History</h1>
+                <p>Review your most recent pickup orders at a glance.</p>
+            </div>
 
-            {orders.map((order) => {
-                const orderDate = order.createdAt ? new Date(order.createdAt) : new Date(order.date || Date.now());
-                const orderTotal = order.totalPrice ?? order.total ?? 0;
+            <div className="order-history-list">
+                {sortedOrders.map((order) => {
+                    const orderDate = order.createdAt ? new Date(order.createdAt) : new Date(order.date || Date.now());
+                    const orderTotal = order.totalPrice ?? order.total ?? 0;
 
-                return (
-                    <div key={order._id} className="order-card">
-                        <p className="order-date">Order Date: {orderDate.toLocaleString()}</p>
-                        <p className="order-total">Total: ${orderTotal.toFixed(2)}</p>
-                        <ul className="order-items">
-                            {order.items.map((item) => (
-                                <li key={item.id ?? `${item.name}-${item.quantity}`} className="order-item">
-                                    {item.quantity} x {item.name} - ${item.price.toFixed(2)} each
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                );
-            })}
+                    return (
+                        <div key={order._id} className="order-card">
+                            <div className="order-card-header">
+                                <p className="order-date">Order Date: {orderDate.toLocaleString()}</p>
+                                <p className="order-total">Total: ${orderTotal.toFixed(2)}</p>
+                            </div>
+                            <ul className="order-items">
+                                {order.items.map((item) => (
+                                    <li key={item.id ?? `${item.name}-${item.quantity}`} className="order-item">
+                                        {item.quantity} x {item.name} - ${item.price.toFixed(2)} each
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }
