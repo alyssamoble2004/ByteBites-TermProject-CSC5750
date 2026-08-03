@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ByteBites - Place Order</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#292020;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    width:400px;
+    background:#560305;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.4);
+}
+
+h2{
+    text-align:center;
+    color:#F3BE15;
+    margin-bottom:20px;
+}
+
+input,
+textarea,
+select{
+
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+
+    border:2px solid #BF5100;
+    border-radius:8px;
+
+    outline:none;
+    font-size:15px;
+}
+
+
+input:focus,
+textarea:focus,
+select:focus{
+
+    border-color:#F3BE15;
+
+}
+
+
+button{
+
+    width:100%;
+    padding:12px;
+
+    background:#BF5100;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    background:#F3BE15;
+
+    color:#560305;
+
+}
+
+
+#message{
+
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#F3BE15;
+
+    font-weight:bold;
+
+}
+
+
+.creator{
+
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#F3BE15;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h2>ByteBites - Place Your Order</h2>
+
+
+<form id="orderForm">
+
+
+<input 
+type="text" 
+id="name" 
+placeholder="Full Name" 
+required>
+
+
+<input 
+type="tel" 
+id="phone" 
+placeholder="Phone Number" 
+required>
+
+
+<textarea 
+id="address" 
+rows="4" 
+placeholder="Delivery Address" 
+required></textarea>
+
+
+<select id="payment" required>
+
+<option value="">
+Select Payment Method
+</option>
+
+<option>
+Cash on Delivery
+</option>
+
+<option>
+Credit/Debit Card
+</option>
+
+<option>
+UPI
+</option>
+
+</select>
+
+
+<button type="submit">
+Place Order
+</button>
+
+
+</form>
+
+
+<p id="message"></p>
+
+
+<p class="creator">
+Created by: Zuhara Begum
+</p>
+
+
+</div>
+
+
+
+<script>
+
+
+document
+.getElementById("orderForm")
+.addEventListener("submit", function(event){
+
+
+event.preventDefault();
+
+
+let name =
+document.getElementById("name").value;
+
+
+document.getElementById("message").innerHTML =
+
+"🎉 Thank you, " + name +
+"! Your order has been placed successfully.";
+
+
+this.reset();
+
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
