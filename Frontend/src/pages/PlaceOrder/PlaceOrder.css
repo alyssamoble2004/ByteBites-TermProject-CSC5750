@@ -1,0 +1,91 @@
+.place-order-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: #292020;
+  font-family: Arial, sans-serif;
+}
+
+.place-order-card {
+  width: min(100%, 420px);
+  background: #560305;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.place-order-card h2 {
+  text-align: center;
+  color: #f3be15;
+  margin: 0 0 20px;
+  font-size: 28px;
+}
+
+.place-order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.place-order-input,
+.place-order-textarea,
+.place-order-select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #bf5100;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+  background: #fff;
+  color: #292020;
+}
+
+.place-order-input:focus,
+.place-order-textarea:focus,
+.place-order-select:focus {
+  border-color: #f3be15;
+}
+
+.place-order-textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.place-order-submit {
+  width: 100%;
+  padding: 12px;
+  background: #bf5100;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.place-order-submit:hover {
+  background: #f3be15;
+  color: #560305;
+}
+
+.place-order-message {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.place-order-message.success {
+  color: #f3be15;
+}
+
+.place-order-message.error {
+  color: #ffd04a;
+}
+
+.place-order-creator {
+  margin-top: 15px;
+  text-align: center;
+  color: #f3be15;
+}
