@@ -1,0 +1,58 @@
+.order-container {
+    width: 400px;
+    background: #560305;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 40px auto;
+}
+
+.order-container h2 {
+    text-align: center;
+    color: #F3BE15;
+}
+
+.order-container input,
+.order-container textarea,
+.order-container select {
+
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+
+    border: 2px solid #BF5100;
+    border-radius: 8px;
+
+}
+
+
+.order-container button {
+
+    width:100%;
+    padding:12px;
+
+    background:#BF5100;
+    color:white;
+
+    border:none;
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+
+.order-container button:hover {
+
+    background:#F3BE15;
+    color:#560305;
+
+}
+
+
+.message,
+.creator {
+
+    text-align:center;
+    color:#F3BE15;
+
+}
