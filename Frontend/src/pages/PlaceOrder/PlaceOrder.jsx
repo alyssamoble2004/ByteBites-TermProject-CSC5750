@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "./PlaceOrder.css";
 
 function PlaceOrder() {
     const navigation = useNavigate();
@@ -9,12 +10,13 @@ function PlaceOrder() {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
+    const [payment, setPayment] = useState("");
     const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!name || !phone || !address) {
+        if (!name || !phone || !address || !payment) {
             setMessage("Please fill all details.");
             return;
         }
@@ -30,6 +32,7 @@ function PlaceOrder() {
                     name,
                     phone,
                     address,
+                    payment,
                 }),
             });
 
@@ -37,12 +40,12 @@ function PlaceOrder() {
                 throw new Error("Failed to place order.");
             }
 
-            setMessage("Order placed successfully!");
+            setMessage(`🎉 Thank you, ${name}! Your order has been placed successfully.`);
 
             setTimeout(() => {
                 navigation("/menu");
             }, 800);
-    
+
         } catch (error) {
             console.error("Error placing order:", error);
             setMessage("Failed to place order. Please try again.");
@@ -50,42 +53,62 @@ function PlaceOrder() {
     };
 
     return (
-        <div className="place-order-card">
-            <h2>Place Your Order</h2>
-            <form onSubmit={handleSubmit} className="place-order-form">
-                <input
-                    className="place-order-input"
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
+        <div className="place-order-page">
+            <div className="place-order-card">
+                <h2>ByteBites - Place Your Order</h2>
+                <form onSubmit={handleSubmit} className="place-order-form">
+                    <input
+                        className="place-order-input"
+                        type="text"
+                        placeholder="Full Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
 
-                <input
-                    className="place-order-input"
-                    type="text"
-                    placeholder="Phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
+                    <input
+                        className="place-order-input"
+                        type="tel"
+                        placeholder="Phone Number"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                    />
 
-                <textarea
-                    className="place-order-textarea"
-                    placeholder="Address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
+                    <textarea
+                        className="place-order-textarea"
+                        placeholder="Delivery Address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        rows="4"
+                        required
+                    />
 
-                <button type="submit" className="place-order-submit">
-                    Place Order
-                </button>
-            </form>
+                    <select
+                        className="place-order-select"
+                        value={payment}
+                        onChange={(e) => setPayment(e.target.value)}
+                        required
+                    >
+                        <option value="">Select Payment Method</option>
+                        <option value="Cash on Delivery">Cash on Delivery</option>
+                        <option value="Credit/Debit Card">Credit/Debit Card</option>
+                        <option value="UPI">UPI</option>
+                    </select>
 
-            {message && (
-                <p className={`place-order-message ${message.includes("successfully") ? "success" : "error"}`}>
-                    {message}
-                </p>
-            )}
+                    <button type="submit" className="place-order-submit">
+                        Place Order
+                    </button>
+                </form>
+
+                {message && (
+                    <p className={`place-order-message ${message.includes("successfully") ? "success" : "error"}`}>
+                        {message}
+                    </p>
+                )}
+
+                <p className="place-order-creator">Created by: Zuhara Begum</p>
+            </div>
         </div>
     );
 }
