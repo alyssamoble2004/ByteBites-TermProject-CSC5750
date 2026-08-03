@@ -148,11 +148,6 @@ function PlaceOrder() {
             </p>
 
 
-            <p className="creator">
-                Created by: Zuhara Begum
-            </p>
-
-
         </div>
 
     );
