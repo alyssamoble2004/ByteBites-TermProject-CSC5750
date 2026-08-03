@@ -1,0 +1,93 @@
+.order-history-page {
+  min-height: 100vh;
+  background: #292020;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.order-history-page .top-section {
+  background: #560305;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+}
+
+.order-history-page .top-section h1 {
+  color: #f3be15;
+  font-size: 30px;
+  margin: 0;
+}
+
+.order-history-page .top-section p {
+  margin: 8px 0 0;
+  font-size: 15px;
+}
+
+.order-history-empty-state {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 24px;
+  background: #ffffff;
+  color: #292020;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.order-history-list {
+  width: min(900px, 92%);
+  margin: 28px auto 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.order-card {
+  background: #ffffff;
+  color: #292020;
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.order-date,
+.order-total {
+  margin: 0;
+  font-weight: 700;
+}
+
+.order-date {
+  color: #560305;
+}
+
+.order-total {
+  color: #bf5100;
+}
+
+.order-items {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.order-item {
+  color: #292020;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .order-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
