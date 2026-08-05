@@ -111,6 +111,22 @@ function Menu() {
     });
   };
 
+  const removeItem = (itemId) => {
+    setOrderItems((prevItems) =>
+      prevItems.flatMap((item) => {
+        if (item.id !== itemId) {
+          return [item];
+        }
+
+        if (item.quantity <= 1) {
+          return [];
+        }
+
+        return [{ ...item, quantity: item.quantity - 1 }];
+      })
+    );
+  };
+
   return (
     <div className="menu-page">
       <header className="top-section">
@@ -165,6 +181,7 @@ function Menu() {
         <OrderSummary
           orderItems={orderItems}
           onClose={() => setShowOrderSummary(false)}
+          onRemoveItem={removeItem}
           onPlaceOrder={() => {
             setShowOrderSummary(false);
             setOrderItems([]);
