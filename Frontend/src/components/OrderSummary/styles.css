@@ -54,6 +54,12 @@
   border-bottom: 1px solid #e3d7c2;
 }
 
+.summary-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .summary-item-name {
   margin: 0;
   font-weight: 700;
@@ -68,6 +74,21 @@
 .summary-item-total {
   font-weight: 700;
   color: #bf5100;
+}
+
+.remove-item-btn {
+  border: 1px solid #560305;
+  background: #fffaf2;
+  color: #560305;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.remove-item-btn:hover {
+  background: #560305;
+  color: #fffaf2;
 }
 
 .summary-total-row {

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
-function OrderSummary({ orderItems, onClose }) {  
+function OrderSummary({ orderItems, onClose, onRemoveItem }) {  
   const totalPrice = orderItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -34,7 +34,17 @@ function OrderSummary({ orderItems, onClose }) {
                       <p className="summary-item-name">{item.name}</p>
                       <p className="summary-item-meta">{item.quantity} × ${item.price.toFixed(2)}</p>
                     </div>
-                    <span className="summary-item-total">${(item.price * item.quantity).toFixed(2)}</span>
+
+                    <div className="summary-item-actions">
+                      <span className="summary-item-total">${(item.price * item.quantity).toFixed(2)}</span>
+                      <button
+                        className="remove-item-btn"
+                        type="button"
+                        onClick={() => onRemoveItem(item.id)}
+                      >
+                        Remove 1
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
